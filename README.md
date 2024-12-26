@@ -1,7 +1,7 @@
 
 # Car Showroom Front-end Application
 
-## Overview
+## Overview   lepc
 
 This repository contains the Car Showroom front-end application. For my application for a DevOps position at tanX.fi, I am using this project to demonstrate my skills in containerization, continuous integration/continuous deployment (CI/CD), and deployment on Kubernetes using Argo CD.
 

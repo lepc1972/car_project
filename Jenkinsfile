@@ -6,9 +6,9 @@ pipeline {
     }
 
     environment {
-        FRONTEND_REPO = 'https://github.com/Sujithsai08/tanxFI_Assignment.git'
+        FRONTEND_REPO = 'https://github.com/lepc1972/car_project.git'
         FRONTEND_BRANCH = 'main'
-        SONAR_URL = 'http://54.160.218.215:9000' // Replace this URL with your SonarQube server URL
+        SONAR_URL = 'http://172.233.178.221:9000' // Replace this URL with your SonarQube server URL
         REGISTRY_CREDENTIALS = credentials('docker-cred')
     }
 
@@ -46,7 +46,7 @@ pipeline {
 
         stage('Build and Push Docker Image') {
             environment {
-                DOCKER_IMAGE = "sujithsai/carshowroom:${env.BUILD_NUMBER}"
+                DOCKER_IMAGE = "lepc1972/car_project:${env.BUILD_NUMBER}"
             }
             steps {
                 script {
@@ -61,13 +61,13 @@ pipeline {
 
         stage('Update Deployment File') {
             environment {
-                GIT_REPO_NAME = "carshowroom_frontend"
-                GIT_USER_NAME = "Sujithsai08"
+                GIT_REPO_NAME = "car_project"
+                GIT_USER_NAME = "lepc1972"
             }
             steps {
                 withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                     sh '''
-                    git config user.email "sujithsai.sirimalla33@gmail.com"
+                    git config user.email "githublepc@gmail.com"
                     git config user.name "${GIT_USER_NAME}"
                     sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" manifests/deployment.yml
                     git add manifests/deployment.yml
