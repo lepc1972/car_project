@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: carshowroom
+  labels:
+    app: carshowroom-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: carshowroom-app
+  template:
+    metadata:
+      labels:
+        app: carshowroom-app
+    spec:
+      containers:
+      - name: carshowroom-app
+        image: sujithsai/carshowroom:7
+        ports:
+        - containerPort: 3001
