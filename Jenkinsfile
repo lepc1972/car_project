@@ -36,17 +36,9 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
-            steps {
-                withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
-                    sh 'npx sonar-scanner -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL} -Dsonar.projectKey=carshowroom_frontend -Dsonar.projectName="Car Showroom Frontend" -Dsonar.sources=src'
-                }
-            }
-        }
-
         stage('Build and Push Docker Image') {
             environment {
-                DOCKER_IMAGE = "lepc1972/car_project:${env.BUILD_NUMBER}"
+                DOCKER_IMAGE = "lepc72/car_project:${env.BUILD_NUMBER}"
             }
             steps {
                 script {

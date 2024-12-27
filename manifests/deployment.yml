@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: carshowroom-app
-        image: sujithsai/carshowroom:7
+        image: lepc72/car_project
         ports:
         - containerPort: 3001
