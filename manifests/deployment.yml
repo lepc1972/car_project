@@ -5,7 +5,7 @@ metadata:
   labels:
     app: carshowroom-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: carshowroom-app
@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: carshowroom-app
-        image: lepc72/car_project
+        image: lepc72/car_project:replaceImageTag
         ports:
         - containerPort: 3001
