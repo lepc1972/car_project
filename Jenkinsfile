@@ -55,20 +55,33 @@ pipeline {
             environment {
                 GIT_REPO_NAME = "car_project"
                 GIT_USER_NAME = "lepc1972"
-            }
-            steps {
-                withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
-                    sh '''
-                    git config user.email "githublepc@gmail.com"
-                    git config user.name "${GIT_USER_NAME}"
-                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" manifests/deployment.yml
-                    git add manifests/deployment.yml
-                    git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                    git push https://${GIT_USER_NAME}:${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git HEAD:main
-                    '''
-                }
-            }
+    }
+    steps {
+        withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+            sh '''
+            # Configurar los datos de Git
+            git config user.email "githublepc@gmail.com"
+            git config user.name "${GIT_USER_NAME}"
+
+            # Reemplazar el placeholder con el número de build en el archivo de despliegue
+            sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" manifests/deployment.yml
+
+            # Restablecer cambios no deseados (si quieres ignorar cambios en package.json y package-lock.json)
+            git restore package.json package-lock.json
+
+            # Agregar el archivo modificado deployment.yml
+            git add manifests/deployment.yml
+
+            # Hacer el commit
+            git commit -m "Update deployment image to version ${BUILD_NUMBER}"
+
+            # Hacer push al repositorio
+            git push https://${GIT_USER_NAME}:${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}.git HEAD:main
+            '''
         }
+    }
+}
+
     }
 
     post {
